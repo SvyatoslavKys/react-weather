@@ -6,7 +6,7 @@ export function getCurrentPosition(options = {}) {
   return new Promise((resolve, reject) => {
     navigator.geolocation.getCurrentPosition(resolve, reject, {
       enableHighAccuracy: false,
-      timeout: 30000,
+      timeout: 10000,
       maximumAge: 300000,
       ...options,
     })
