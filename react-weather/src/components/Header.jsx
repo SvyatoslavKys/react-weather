@@ -9,7 +9,7 @@ export function Header() {
     return (
         <header>
             <nav className="bg-[7FC3AE] max-h-25 py-4">
-                <ul>{navItems.map((item) => (
+                <ul className="flex justify-center">{navItems.map((item) => (
                     <li key={item.path}>
                         <NavLink to={item.path} className="text-black hover:text-gray-300">
                             {item.name}

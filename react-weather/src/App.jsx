@@ -7,7 +7,7 @@ import { AppPage } from './pages/AppPage'
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={import.meta.env.BASE_URL}>
       <Header />
       <main className="mx-auto max-w-6xl px-4 py-6">
         <Routes>
