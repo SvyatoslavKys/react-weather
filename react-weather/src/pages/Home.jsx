@@ -1,12 +1,20 @@
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 import { PositionDetailsGrid } from "../components/home/PositionDetailsGrid"
 import { getCurrentPosition } from "../services/getCurrentPosition"
+import {
+  getForecastByCoordinates,
+  getWeatherByCoordinates,
+  persistWeatherSnapshot,
+} from "../services/weatherApi"
 import {
   getGeolocationErrorMessage,
   getPositionDetails,
 } from "../utils/geolocationDisplay"
+import { clearThemeDebugOverride } from "../utils/weatherTheme"
 
 export function Homepage() {
+  const navigate = useNavigate()
   const [position, setPosition] = useState(null)
   const [status, setStatus] = useState("idle")
   const [errorMessage, setErrorMessage] = useState("")
@@ -15,17 +23,48 @@ export function Homepage() {
   async function handleGetLocation() {
     setStatus("loading")
     setErrorMessage("")
+    let nextPosition = null
 
     try {
-      const nextPosition = await getCurrentPosition()
+      nextPosition = await getCurrentPosition()
+      const latitude = nextPosition.coords.latitude
+      const longitude = nextPosition.coords.longitude
 
       setPosition(nextPosition)
+
+      const [nextWeather, nextForecast] = await Promise.all([
+        getWeatherByCoordinates(latitude, longitude),
+        getForecastByCoordinates(latitude, longitude),
+      ])
+
+      const resolvedCity = nextWeather.name?.trim() || "Current location"
+
+      clearThemeDebugOverride()
+      persistWeatherSnapshot({
+        city: resolvedCity,
+        forecast: nextForecast,
+        location: {
+          lat: latitude,
+          lon: longitude,
+        },
+        weather: nextWeather,
+      })
+
       setStatus("success")
+      navigate("/weather")
     } catch (error) {
-      console.error("Geolocation error:", error)
-      setPosition(null)
+      console.error("Geolocation weather flow error:", error)
+
+      if (!nextPosition) {
+        setPosition(null)
+      }
+
       setStatus("error")
-      setErrorMessage(getGeolocationErrorMessage(error))
+      setErrorMessage(
+        nextPosition
+          ? error.message ?? "Failed to load weather for the current location."
+          : getGeolocationErrorMessage(error)
+      )
     }
   }
 
@@ -54,7 +93,7 @@ export function Homepage() {
 
         {status === "loading" && (
           <div className="mt-6 rounded-[1.5rem] border border-white/16 bg-white/8 px-4 py-4 text-sm text-white/78">
-            Waiting for the browser to return your coordinates...
+            Requesting coordinates and syncing weather for your current location...
           </div>
         )}
 
