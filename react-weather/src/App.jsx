@@ -4,6 +4,7 @@ import { WeatherBackground } from './components/WeatherBackground'
 import { WeatherPage } from './pages/WeatherPage'
 import { Homepage } from './pages/Home'
 import { AppPage } from './pages/AppPage'
+import { MoonCalendar } from './pages/MoonCalendar'
 
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
               <Route path="/" element={<Homepage />} />
               <Route path="/weather" element={<WeatherPage />} />
               <Route path="/app" element={<AppPage />} />
+              <Route path="/moon" element={<MoonCalendar />} />
             </Routes>
           </main>
         </div>
