@@ -1,7 +1,8 @@
 import { WeatherCard } from "../WeatherCard"
 import { getHourlyForecast } from "../../utils/weatherDisplay"
 
-export function ForecastStrip({ forecast, panelClasses, weather }) {
+export function ForecastStrip({ forecast, mode = "dark", panelClasses, weather }) {
+  const isLight = mode === "light"
   const hourlyForecast = getHourlyForecast(forecast)
   const timezone = forecast?.city?.timezone ?? weather.timezone
 
@@ -11,14 +12,18 @@ export function ForecastStrip({ forecast, panelClasses, weather }) {
     >
       <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <p className="text-xs uppercase tracking-[0.32em] text-white/52">
+          <p className={`text-xs uppercase tracking-[0.32em] ${
+            isLight ? "text-slate-900/42" : "text-white/52"
+          }`}>
             Forecast line
           </p>
-          <h3 className="mt-2 text-xl font-semibold text-white sm:text-2xl">
+          <h3 className={`mt-2 text-xl font-semibold sm:text-2xl ${
+            isLight ? "text-slate-950" : "text-white"
+          }`}>
             Upcoming Hours
           </h3>
         </div>
-        <p className="text-sm text-white/68">
+        <p className={`text-sm ${isLight ? "text-slate-900/58" : "text-white/68"}`}>
           OpenWeather 3-hour forecast samples
         </p>
       </div>
@@ -30,13 +35,18 @@ export function ForecastStrip({ forecast, panelClasses, weather }) {
               <WeatherCard
                 key={item.dt}
                 item={item}
+                mode={mode}
                 timezone={timezone}
               />
             ))}
           </div>
         </div>
       ) : (
-        <div className="mt-6 rounded-[1.6rem] border border-white/16 bg-white/8 px-4 py-8 text-center text-sm text-white/72">
+        <div className={`mt-6 rounded-[1.6rem] border px-4 py-8 text-center text-sm ${
+          isLight
+            ? "border-slate-900/10 bg-slate-950/6 text-slate-900/62"
+            : "border-white/16 bg-white/8 text-white/72"
+        }`}>
           Forecast samples will appear here after the next successful weather request.
         </div>
       )}

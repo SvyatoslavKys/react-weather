@@ -1,6 +1,7 @@
 import { formatClock, formatVisibility } from "../../utils/weatherDisplay"
 
-export function WeatherMetricsGrid({ weather }) {
+export function WeatherMetricsGrid({ mode = "dark", weather }) {
+  const isLight = mode === "light"
   const items = [
     {
       label: "Humidity",
@@ -25,12 +26,20 @@ export function WeatherMetricsGrid({ weather }) {
       {items.map((item) => (
         <div
           key={item.label}
-          className="rounded-[1.35rem] border border-white/18 bg-white/8 p-3 sm:rounded-[1.5rem] sm:p-4"
+          className={`rounded-[1.35rem] border p-3 sm:rounded-[1.5rem] sm:p-4 ${
+            isLight
+              ? "border-slate-900/10 bg-slate-950/6"
+              : "border-white/18 bg-white/8"
+          }`}
         >
-          <p className="text-xs uppercase tracking-[0.24em] text-white/48">
+          <p className={`text-xs uppercase tracking-[0.24em] ${
+            isLight ? "text-slate-900/45" : "text-white/48"
+          }`}>
             {item.label}
           </p>
-          <p className="mt-2 text-lg font-semibold text-white sm:mt-3 sm:text-2xl">
+          <p className={`mt-2 text-lg font-semibold sm:mt-3 sm:text-2xl ${
+            isLight ? "text-slate-950" : "text-white"
+          }`}>
             {item.value}
           </p>
         </div>
