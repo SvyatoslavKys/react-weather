@@ -1,6 +1,6 @@
 export const NAV_ITEMS = [
-  { name: "Home", path: "/" },
-  { name: "Weather", path: "/weather" },
-  { name: "App", path: "/app" },
-  { name: "Moon Calendar", path: "/moon"}
+  { name: "Home", path: "/", shortName: "Home" },
+  { name: "Weather", path: "/weather", shortName: "Weather" },
+  { name: "App", path: "/app", shortName: "App" },
+  { name: "Moon Calendar", path: "/moon", shortName: "Moon" },
 ]

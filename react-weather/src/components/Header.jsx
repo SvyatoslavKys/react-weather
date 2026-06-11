@@ -77,7 +77,12 @@ export function Header() {
                       `liquid-nav__link ${isActive ? "liquid-nav__link--active" : ""}`
                     }
                   >
-                    <span className="liquid-nav__label">{item.name}</span>
+                    <span className="liquid-nav__label liquid-nav__label--desktop">
+                      {item.name}
+                    </span>
+                    <span className="liquid-nav__label liquid-nav__label--mobile">
+                      {item.shortName ?? item.name}
+                    </span>
                   </NavLink>
                 </li>
               ))}

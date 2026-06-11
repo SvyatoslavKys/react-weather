@@ -207,23 +207,45 @@ body {
 .liquid-nav__label {
   font-size: 1rem;
   font-weight: 600;
+  white-space: nowrap;
+}
+
+.liquid-nav__label--mobile {
+  display: none;
 }
 
 @media (max-width: 767px) {
   .liquid-nav {
-    border-radius: 1.8rem;
-    padding: 0.6rem;
+    border-radius: 1.55rem;
+    padding: 0.45rem;
     max-width: 100%;
   }
 
+  .liquid-nav__list {
+    gap: 0.32rem;
+  }
+
   .liquid-nav__link {
-    min-width: clamp(5rem, 27vw, 6rem);
-    min-height: 3.75rem;
-    padding-inline: 0.8rem;
+    min-width: clamp(4.25rem, 21vw, 5.15rem);
+    min-height: 3.35rem;
+    border-radius: 1.15rem;
+    padding: 0.65rem 0.55rem;
   }
 
   .liquid-nav__label {
-    font-size: 0.95rem;
+    font-size: 0.82rem;
+  }
+
+  .liquid-nav__label--desktop {
+    display: none;
+  }
+
+  .liquid-nav__label--mobile {
+    display: inline;
+  }
+
+  .liquid-nav__thumb {
+    border-radius: 1.15rem;
   }
 }
 
